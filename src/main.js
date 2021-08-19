@@ -2,12 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 Vue.config.productionTip = false
-
+    // 导入eleui
 import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
+    // 导入字体图标库
 
+import '@/assets/fonts/iconfont.css'
 
 
 import axios from 'axios'
@@ -19,7 +21,7 @@ axios.interceptors.request.use(function(config) {
     // 在发送请求之前做些什么
     let token_ = window.sessionStorage.getItem('token')
     if (token_) {
-        config.headers['token'] = token_
+        config.headers.Authorization = token_
         return config
     }
     return config;

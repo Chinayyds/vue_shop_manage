@@ -6,28 +6,35 @@
         <button @click="tuichu()">退出登录</button>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside :width="iszd ? '64px' : '200px'">
+          <div class="tog_btn" @click="togbtn()">|||</div>
           <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             :router="true"
             :unique-opened="true"
+            :collapse="iszd"
+            :collapse-transition="false"
           >
-            <el-submenu :index="item.id" v-for="item in list" :key="item.id">
+            <el-submenu
+              :index="item.id + ''"
+              v-for="item in list"
+              :key="item.id"
+            >
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i :class="iconobj[item.id]"></i>
                 <span>{{ item.authName }}</span>
               </template>
               <el-menu-item
-                :index="ite.id"
+                :index="ite.id + ''"
                 v-for="ite in item.children"
                 :key="ite.id"
                 :route="{ path: '/home/' + ite.path }"
-                >{{ ite.authName }}</el-menu-item
               >
+                <i class="el-icon-menu"></i>
+                {{ ite.authName }}
+              </el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
@@ -45,6 +52,14 @@ export default {
   data() {
     return {
       list: [],
+      iconobj: {
+        125: "iconfont icon-users",
+        103: "iconfont icon-tijikongjian",
+        101: "iconfont icon-shangpin",
+        102: "iconfont icon-danju",
+        145: "iconfont icon-baobiao",
+      },
+      iszd: false,
     };
   },
   methods: {
@@ -52,14 +67,24 @@ export default {
       window.sessionStorage.removeItem("token");
       this.$router.push("/");
     },
+    // 点击按钮折叠
+    togbtn() {
+      this.iszd = !this.iszd;
+    },
   },
   components: {},
-  // mounted() {
-  //   this.axios.get("http://127.0.0.1:8888/api/private/v1//sliderbar").then((res) => {
-  //   //   console.log(res);
-  //     this.list = res.data.list;
-  //   });
-  // },
+  mounted() {
+    this.$http.get("menus").then((res) => {
+      console.log(res);
+      this.list = res.data.data;
+      if (res.data.meta.status != 200)
+        return this.$message({
+          message: res.data.meta.msg,
+          type: "success",
+          duration: "500",
+        });
+    });
+  },
 };
 </script>
 
@@ -70,7 +95,6 @@ export default {
     height: 100%;
     .el-header {
       background-color: skyblue;
-      margin-bottom: 10px;
       text-align: center;
       button {
         float: right;
@@ -83,6 +107,18 @@ export default {
       background-color: pink;
     }
   }
+}
+.iconfont {
+  margin-right: 10px;
+}
+.tog_btn {
+  color: #fff;
+  background-color: #ccc;
+  text-align: center;
+  line-height: 24px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
 }
 </style>
 

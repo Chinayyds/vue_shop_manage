@@ -14,22 +14,28 @@ const routes = [{
         path: '/home',
         name: 'Home',
         component: () =>
-            import ('../views/Home.vue'),
+            import ('@/views/Home.vue'),
+        redirect: 'welcome',
         children: [{
-                path: 'userList',
+                path: 'welcome',
                 component: () =>
-                    import ('../components/userList.vue')
+                    import ('@/components/Welcome.vue')
             },
-            {
-                path: 'addUser',
-                component: () =>
-                    import ('../components/addUser.vue')
-            },
-            {
-                path: 'removeUser',
-                component: () =>
-                    import ('../components/removeUser.vue')
-            }
+            // {
+            //     path: 'userList',
+            //     component: () =>
+            //         import ('@/components/userList.vue')
+            // },
+            // {
+            //     path: 'addUser',
+            //     component: () =>
+            //         import ('@/components/addUser.vue')
+            // },
+            // {
+            //     path: 'removeUser',
+            //     component: () =>
+            //         import ('@/components/removeUser.vue')
+            // }
         ]
 
     }

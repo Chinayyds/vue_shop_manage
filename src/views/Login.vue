@@ -93,6 +93,12 @@ export default {
                   },
                 });
               window.sessionStorage.setItem("token", res.data.data.token);
+              }else{
+                this.$message({
+                  message: res.data.meta.msg,
+                  type: "error",
+                  duration: "800",
+                });
               }
             });
         } else {

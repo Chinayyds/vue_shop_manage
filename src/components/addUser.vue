@@ -36,7 +36,7 @@ export default {
   methods: {},
   components: {},
     mounted() {
-    this.axios.get("http://localhost:3000/movie_now", {}).then((res) => {
+    this.$http.get('menus').then((res) => {
       console.log(res);
       this.list=res.data.subjects.list
       this.title=res.data.subjects.title
