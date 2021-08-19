@@ -2,8 +2,11 @@
   <div class="home">
     <el-container class="home_cont">
       <el-header>
-        <h2>欢 迎 登 录</h2>
-        <button @click="tuichu()">退出登录</button>
+        <div>
+          <img src="@/assets/img/timg.jpg" alt="" />
+          <span>德 玛 西 亚 酒 店 后 台 管 理 系 统</span>
+        </div>
+        <el-button type="info" @click="tuichu()">退出登录</el-button>
       </el-header>
       <el-container>
         <el-aside :width="iszd ? '64px' : '200px'">
@@ -23,16 +26,22 @@
               :key="item.id"
             >
               <template slot="title">
+                <!-- 图标 -->
                 <i :class="iconobj[item.id]"></i>
+                <!-- 文本 -->
                 <span>{{ item.authName }}</span>
               </template>
+
+              <!-- 二级菜单 -->
               <el-menu-item
                 :index="ite.id + ''"
                 v-for="ite in item.children"
                 :key="ite.id"
                 :route="{ path: '/home/' + ite.path }"
               >
+                <!-- 图标 -->
                 <i class="el-icon-menu"></i>
+                <!-- 文本 -->
                 {{ ite.authName }}
               </el-menu-item>
             </el-submenu>
@@ -60,9 +69,12 @@ export default {
         145: "iconfont icon-baobiao",
       },
       iszd: false,
+      ztm: "",
     };
   },
+  // 方法
   methods: {
+    // 退出按钮
     tuichu() {
       window.sessionStorage.removeItem("token");
       this.$router.push("/");
@@ -71,11 +83,16 @@ export default {
     togbtn() {
       this.iszd = !this.iszd;
     },
+    
   },
   components: {},
+  created(){
+    this.ztm = window.sessionStorage.getItem("ztm");
+
+  },
   mounted() {
     this.$http.get("menus").then((res) => {
-      console.log(res);
+      // console.log(res);
       this.list = res.data.data;
       if (res.data.meta.status != 200)
         return this.$message({
@@ -94,17 +111,32 @@ export default {
   .home_cont {
     height: 100%;
     .el-header {
-      background-color: skyblue;
-      text-align: center;
-      button {
-        float: right;
+      background-color: #373d41;
+      padding-left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-size: 20px;
+      > div {
+        display: flex;
+        align-items: center;
+        span {
+          padding-left: 20px;
+        }
+      }
+      img {
+        height: 60px;
       }
     }
     .el-aside {
       background-color: #545c64;
+      .el-menu{
+        border: none;
+      }
     }
     .el-main {
-      background-color: pink;
+      background-color: #eee;
     }
   }
 }
@@ -113,7 +145,7 @@ export default {
 }
 .tog_btn {
   color: #fff;
-  background-color: #ccc;
+  background-color: #475163;
   text-align: center;
   line-height: 24px;
   font-size: 10px;

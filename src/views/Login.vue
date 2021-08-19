@@ -7,6 +7,9 @@
       ref="ruleForm"
     >
       <el-form-item prop="name">
+        <div class="touxiang">
+          <img src="@/assets/img/timg.jpg" alt="" />
+        </div>
         <el-input
           v-model="formLabelAlign.name"
           placeholder="请输入用户名"
@@ -92,8 +95,8 @@ export default {
                     this.$router.push("/home");
                   },
                 });
-              window.sessionStorage.setItem("token", res.data.data.token);
-              }else{
+                window.sessionStorage.setItem("token", res.data.data.token);
+              } else {
                 this.$message({
                   message: res.data.meta.msg,
                   type: "error",
@@ -110,28 +113,6 @@ export default {
     submitForm1(formName) {
       this.$refs[formName].resetFields();
     },
-    // submitForm1(formName) {
-    //   this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //       this.axios
-    //         .post("http://127.0.0.1:8888/api/private/v1//register", {
-    //           username: this.formLabelAlign.name,
-    //           password: this.formLabelAlign.pwd,
-    //         })
-    //         .then((res) => {
-    //           // console.log(res);
-    //           this.$message({
-    //             message: res.data.message,
-    //             type: "success",
-    //             duration: "800",
-    //           });
-    //         });
-    //     } else {
-    //       console.log("error submit!!");
-    //       return false;
-    //     }
-    //   });
-    // },
   },
   components: {},
 };
@@ -140,7 +121,7 @@ export default {
 <style scoped lang="less">
 .login {
   height: 100%;
-  background-color: rgb(48, 105, 91);
+  background-color:#2b4b6b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,8 +129,26 @@ export default {
 .login_form {
   width: 35%;
   padding: 30px;
+  position: relative;
   background-color: #fff;
   border-radius: 10px;
+}
+.touxiang {
+  width: 130px;
+  height: 130px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 10px #ddd;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50% ,-100%);
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 }
 .btn {
   width: 48%;
