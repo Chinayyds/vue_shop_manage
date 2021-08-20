@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-Vue.config.productionTip = false
-    // 导入eleui
+Vue.config.productionTip = false;
+// 导入全局样式
+import '../src/assets/css/golbal.css'
+// 导入eleui
 import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css';
+// Vue.prototype.$confirm = MessageBox.confirm;
 Vue.use(ElementUI)
-    // 导入字体图标库
 
+// 导入字体图标库
 import '@/assets/fonts/iconfont.css'
 
 

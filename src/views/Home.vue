@@ -4,7 +4,7 @@
       <el-header>
         <div>
           <img src="@/assets/img/timg.jpg" alt="" />
-          <span>德 玛 西 亚 酒 店 后 台 管 理 系 统</span>
+          <span>德 玛 西 亚 商 城 后 台 管 理 系 统</span>
         </div>
         <el-button type="info" @click="tuichu()">退出登录</el-button>
       </el-header>

@@ -75,6 +75,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRoles(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -151,6 +152,37 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="editusers = false">取 消</el-button>
         <el-button type="primary" @click="editUsersInfo">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 分配用户角色的对话框 -->
+    <el-dialog
+      title="修改用户信息"
+      :visible.sync="setRolesuser"
+      width="50%"
+      @close="addrolesuser"
+    >
+      <!-- 内容主题区 -->
+      <div>
+        <p>当前的用户：{{ setRolesData.username }}</p>
+        <p>当前的角色：{{ setRolesData.role_name }}</p>
+        <p>
+          分配的新角色：
+          <el-select v-model="seleRolesId" placeholder="请选择">
+            <el-option
+              v-for="item in getRolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <!-- 底部区 -->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRolesuser = false">取 消</el-button>
+        <el-button type="primary" @click="setUsersRoles">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -241,6 +273,14 @@ export default {
           { validator: checkEmail, trigger: "blur" },
         ],
       },
+      // 分配用户角色信息对话框的显示与隐藏
+      setRolesuser: false,
+      // 分配角色获取的数据
+      setRolesData: {},
+      // 获取所有的角色信息
+      getRolesList: [],
+      // 选中的角色信息的Id值
+      seleRolesId: "",
     };
   },
   methods: {
@@ -303,7 +343,7 @@ export default {
         if (!vaild) return;
         // 如果成功发起添加用户请求
         this.$http.post("users", this.addForm).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.data.meta.status == 201) {
             this.$message({
               message: res.data.meta.msg,
@@ -384,12 +424,12 @@ export default {
         .then(() => {
           // console.log(id);
           this.$http.delete("users/" + id).then((res) => {
+            this.queryAxios();
+            this.$message({
+              type: "error",
+              message:res.data.meta.msg,
+            });
             // console.log(res);
-          });
-          this.queryAxios();
-          this.$message({
-            type: "success",
-            message: "删除成功!",
           });
         })
         .catch(() => {
@@ -398,6 +438,52 @@ export default {
             message: "已取消删除",
           });
         });
+    },
+    // 分配角色按钮点击获取信息展示对话框
+    setRoles(userInfo) {
+      this.setRolesData = userInfo;
+      this.$http.get("roles").then((res) => {
+        // console.log(res);
+        this.getRolesList = res.data.data;
+      });
+      this.setRolesuser = true;
+    },
+    // 分配角色按钮点击提交
+    setUsersRoles() {
+      if (!this.seleRolesId) {
+        return this.$message({
+          message: "请选择分配的角色",
+          type: "error",
+          duration: "500",
+        });
+      }
+      this.$http
+        .put(`users/${this.setRolesData.id}/role`, {
+          rid: this.seleRolesId,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.meta.status == 200) {
+            this.setRolesuser = false;
+            this.queryAxios();
+            this.$message({
+              message: res.data.meta.msg,
+              type: "success",
+              duration: "500",
+            });
+          } else {
+            this.$message({
+              message: res.data.meta.msg,
+              type: "error",
+              duration: "500",
+            });
+          }
+        });
+    },
+    // 监听分配对话框关闭事件
+    addrolesuser() {
+      this.seleRolesId = "";
+      this.setRolesData = {};
     },
   },
   components: {},
@@ -415,5 +501,8 @@ export default {
 .box-card {
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+p {
+  line-height: 34px;
 }
 </style>
