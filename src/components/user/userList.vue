@@ -300,7 +300,7 @@ export default {
     },
     // 监听页面size
     changeSize(nsize) {
-      console.log(nsize);
+      // console.log(nsize);
       this.queryInfo.pagesize = nsize;
       this.queryAxios();
     },

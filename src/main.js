@@ -6,7 +6,6 @@ Vue.config.productionTip = false;
 import '../src/assets/css/golbal.css'
 // 导入eleui
 import ElementUI from 'element-ui'
-
 import 'element-ui/lib/theme-chalk/index.css';
 // Vue.prototype.$confirm = MessageBox.confirm;
 Vue.use(ElementUI)
@@ -14,12 +13,17 @@ Vue.use(ElementUI)
 // 导入字体图标库
 import '@/assets/fonts/iconfont.css'
 
-
+// 导入Axios
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 Vue.prototype.$http = axios
 
-// 添加请求拦截器
+// 导入Vue。tree
+
+import TreeTable from 'vue-table-with-tree-grid'
+
+Vue.component("tree-table", TreeTable)
+    // 添加请求拦截器
 axios.interceptors.request.use(function(config) {
     // 在发送请求之前做些什么
     let token_ = window.sessionStorage.getItem('token')

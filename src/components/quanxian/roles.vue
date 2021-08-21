@@ -468,6 +468,10 @@ export default {
 </script>
 
 <style scoped lang="less">
+.el-breadcrumb {
+  margin-bottom: 15px;
+  font-size: 13px;
+}
 .el-tag {
   margin: 7px;
 }
