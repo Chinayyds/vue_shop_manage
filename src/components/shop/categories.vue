@@ -96,13 +96,12 @@
         </el-form-item>
         <el-form-item label="父级分类：">
           <el-cascader
+            expand-trigger="hover"
             v-model="selectedKeys"
             :options="parentsList"
-            expand-trigger="hover"
             :props="cascaderProps"
             @change="parentCateChange"
             clearable
-            change-on-select
           ></el-cascader>
         </el-form-item>
       </el-form>
@@ -232,7 +231,7 @@ export default {
     getCateList() {
       this.$http.get("categories", { params: this.queryInfo }).then((res) => {
         // console.log(res);
-        if (res.data.meta.status !== 200) {
+        if (res.data.meta.status != 200) {
           return this.$message({
             message: res.data.data.meta.msg,
             type: "error",
