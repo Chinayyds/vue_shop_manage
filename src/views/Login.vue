@@ -85,7 +85,7 @@ export default {
               password: this.formLabelAlign.pwd,
             })
             .then((res) => {
-              console.log(res);
+              // console.log(res);
               if (res.data.meta.status == 200) {
                 this.$message({
                   message: res.data.meta.msg,

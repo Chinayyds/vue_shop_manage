@@ -230,7 +230,7 @@ export default {
     // 请求商品分类列表
     getCateList() {
       this.$http.get("categories", { params: this.queryInfo }).then((res) => {
-        // console.log(res);
+        console.log(res);
         if (res.data.meta.status != 200) {
           return this.$message({
             message: res.data.data.meta.msg,
@@ -294,7 +294,7 @@ export default {
     },
     //点击按钮， 添加分类
     addCate() {
-      console.log(this.addCateForm);
+      // console.log(this.addCateForm);
       this.$refs.addCateFormRef.validate((vaild) => {
         if (!vaild) return;
         // 如果成功发起添加分类请求
