@@ -24,7 +24,12 @@ import TreeTable from 'vue-table-with-tree-grid'
 
 Vue.component("tree-table", TreeTable)
 
+// 导入
+// import Timeline from '@assets/timeline/index.js'
+// import TimelineItem from '@assets/timeline-item/index.js'
 
+// Vue.use(Timeline)
+// Vue.use(TimelineItem)
 // 导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 
