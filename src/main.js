@@ -31,6 +31,10 @@ Vue.component("tree-table", TreeTable)
 // Vue.use(Timeline)
 // Vue.use(TimelineItem)
 // 导入富文本编辑器
+
+// // 导入依赖项
+// import echarts from 'echarts'
+// Vue.use(echarts)
 import VueQuillEditor from 'vue-quill-editor'
 
 import 'quill/dist/quill.core.css' // import styles
