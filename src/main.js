@@ -24,10 +24,6 @@ import TreeTable from 'vue-table-with-tree-grid'
 
 Vue.component("tree-table", TreeTable)
 
-// 导入
-// import Timeline from '@assets/timeline/index.js'
-// import TimelineItem from '@assets/timeline-item/index.js'
-
 // Vue.use(Timeline)
 // Vue.use(TimelineItem)
 // 导入富文本编辑器
@@ -41,10 +37,14 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 导入nprogress
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 Vue.use(VueQuillEditor, /* { default global options } */ )
     // 添加请求拦截器
 axios.interceptors.request.use(function(config) {
-    // 在发送请求之前做些什么
+    NProgress.start()
+        // 在发送请求之前做些什么
     let token_ = window.sessionStorage.getItem('token')
     if (token_) {
         config.headers.Authorization = token_
@@ -55,6 +55,10 @@ axios.interceptors.request.use(function(config) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
+axios.interceptors.response.use(config => {
+    NProgress.done()
+    return config
+})
 
 // 全局时间过滤器
 Vue.filter('dateFormat', function(val) {
