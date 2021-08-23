@@ -68,7 +68,7 @@ export default {
           duration: "800",
         });
       }
-      console.log(res);
+      // console.log(res);
       // this.propresInfo = res.data.data;
       // this.total = res.data.data.total;
       // 基于准备好的dom，初始化echarts实例

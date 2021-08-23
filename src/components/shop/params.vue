@@ -22,8 +22,8 @@
         <el-col>
           <span>选择商品分类：</span>
           <!-- 级联选择框 -->
+            <!-- expand-trigger="hover" -->
           <el-cascader
-            expand-trigger="hover"
             :options="cateList"
             v-model="selectedCateKeys"
             :props="cateprops"
@@ -238,6 +238,7 @@ export default {
       cateList: [],
       // 级联选择框配置
       cateprops: {
+        expandTrigger:'hover',
         value: "cat_id",
         label: "cat_name",
         children: "children",

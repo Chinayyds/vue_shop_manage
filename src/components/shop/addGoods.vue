@@ -60,8 +60,8 @@
             </el-form-item>
             <el-form-item label="商品分类" prop="goods_cat">
               <!-- 级联选择框 -->
+                <!-- expand-trigger="hover" -->
               <el-cascader
-                expand-trigger="hover"
                 :options="cateList"
                 v-model="addForm.goods_cat"
                 :props="cateprops"
@@ -168,6 +168,7 @@ export default {
       cateList: [],
       // 级联选择框配置
       cateprops: {
+        expandTrigger:'hover',
         value: "cat_id",
         label: "cat_name",
         children: "children",

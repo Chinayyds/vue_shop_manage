@@ -25,9 +25,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="goaddgoods"
-            >添加商品</el-button
-          >
+          <el-button type="primary" @click="goaddgoods">添加商品</el-button>
         </el-col>
       </el-row>
 
@@ -76,7 +74,6 @@
       >
       </el-pagination>
     </el-card>
-   
 
     <!-- 修改商品的对话框 -->
     <el-dialog title="修改商品信息" :visible.sync="editgoods" width="50%">
@@ -91,9 +88,6 @@
         <el-form-item label="商品名称" prop="goods_name">
           <el-input v-model="editGoodsFrom.goods_name"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="goods_cat">
-          <el-input v-model="editGoodsFrom.goods_cat"></el-input>
-        </el-form-item>
         <el-form-item label="商品价格(元)" prop="goods_price">
           <el-input v-model="editGoodsFrom.goods_price"></el-input>
         </el-form-item>
@@ -102,15 +96,6 @@
         </el-form-item>
         <el-form-item label="商品重量" prop="goods_weight">
           <el-input v-model="editGoodsFrom.goods_weight"></el-input>
-        </el-form-item>
-        <el-form-item label="商品介绍" prop="goods_introduce">
-          <el-input v-model="editGoodsFrom.goods_introduce"></el-input>
-        </el-form-item>
-        <el-form-item label="商品数量" prop="pics">
-          <el-input v-model="editGoodsFrom.pics"></el-input>
-        </el-form-item>
-        <el-form-item label="商品数量" prop="attrs">
-          <el-input v-model="editGoodsFrom.attrs"></el-input>
         </el-form-item>
       </el-form>
       <!-- 底部区 -->
@@ -142,23 +127,23 @@ export default {
       // 修改商品信息对话框的显示与隐藏
       editgoods: false,
       // 保存查询的用户信息
-      editGoodsFrom: {},
-      
-     
+      editGoodsFrom: {
+        id: "",
+      },
+
       // 修改商品的表单验证规则
       editGoodsFormRules: {
         goods_name: [
           { required: true, message: "请输入商品名称", trigger: "blur" },
         ],
-        goods_cat: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        goods_price: [
-          { required: true, message: "请输入手机号", trigger: "blur" },
+         goods_price: [
+          { required: true, message: "请输入商品价格", trigger: "blur" },
         ],
         goods_number: [
-          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { required: true, message: "请输入商品数量", trigger: "blur" },
         ],
         goods_weight: [
-          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { required: true, message: "请输入商品重量", trigger: "blur" },
         ],
       },
     };
@@ -177,7 +162,7 @@ export default {
             duration: "800",
           });
         }
-        console.log(res);
+        // console.log(res);
         this.goodslist = res.data.data.goods;
         this.total = res.data.data.total;
       });
@@ -196,19 +181,20 @@ export default {
     },
     // 点击添加商品跳转页面
     goaddgoods() {
-      this.$router.push('/home/addGoods')
+      this.$router.push("/home/addGoods");
     },
     // 获取需要修改用户的信息
     editGoods(id) {
+      // console.log(id);
       this.$http.get("goods/" + id).then((res) => {
-        // console.log(res);
         if (res.data.meta.status == 200) {
           this.editGoodsFrom = res.data.data;
-          this.$message({
-            message: res.data.meta.msg,
-            type: "success",
-            duration: "500",
-          });
+          (this.editGoodsFrom.id = this.editGoodsFrom.goods_id),
+            this.$message({
+              message: res.data.meta.msg,
+              type: "success",
+              duration: "500",
+            });
         } else {
           this.$message({
             message: res.data.meta.msg,
@@ -217,15 +203,16 @@ export default {
           });
         }
       });
-      this.editusers = true;
+      this.editgoods = true;
     },
     // 确定修改用户信息时进行表单预验证
     editGoodssInfo() {
+      // console.log(this.editGoodsFrom);
       this.$refs.editGoodsFormRef.validate((vaild) => {
         if (!vaild) return;
         // 如果成功发起添加用户请求
         this.$http
-          .put("goods/" + this.editGoodsFrom.id, this.editGoodsFrom)
+          .put(`goods/${this.editGoodsFrom.id - 0}`, this.editGoodsFrom)
           .then((res) => {
             console.log(res);
             if (res.data.meta.status == 200) {
@@ -258,8 +245,8 @@ export default {
           this.$http.delete("goods/" + id).then((res) => {
             this.getGoodsList();
             this.$message({
-              type: "error",
-              message:res.data.meta.msg,
+              type: "success",
+              message: res.data.meta.msg,
             });
             // console.log(res);
           });
