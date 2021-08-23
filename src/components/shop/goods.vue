@@ -126,7 +126,7 @@ export default {
       addgoods: false,
       // 修改商品信息对话框的显示与隐藏
       editgoods: false,
-      // 保存查询的用户信息
+      // 保存查询的商品信息
       editGoodsFrom: {
         id: "",
       },
@@ -183,7 +183,7 @@ export default {
     goaddgoods() {
       this.$router.push("/home/addGoods");
     },
-    // 获取需要修改用户的信息
+    // 获取需要修改商品的信息
     editGoods(id) {
       // console.log(id);
       this.$http.get("goods/" + id).then((res) => {
@@ -205,14 +205,14 @@ export default {
       });
       this.editgoods = true;
     },
-    // 确定修改用户信息时进行表单预验证
+    // 确定修改商品信息时进行表单预验证
     editGoodssInfo() {
       // console.log(this.editGoodsFrom);
       this.$refs.editGoodsFormRef.validate((vaild) => {
         if (!vaild) return;
-        // 如果成功发起添加用户请求
+        // 如果成功发起添加商品请求
         this.$http
-          .put(`goods/${this.editGoodsFrom.id - 0}`, this.editGoodsFrom)
+          .put(`goods/${this.editGoodsFrom.id}`, this.editGoodsFrom)
           .then((res) => {
             console.log(res);
             if (res.data.meta.status == 200) {
